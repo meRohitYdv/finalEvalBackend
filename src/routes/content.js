@@ -6,5 +6,8 @@ router.get('/', controller.getAllContents);
 router.post('/addField', controller.addFieldToContent);
 router.delete('/deleteField', controller.deleteFieldFromContent);
 router.get('/fields/:contentName', controller.getfieldsFromContentName);
+router.patch('/updateName', controller.updateName);
+router.patch('/updateField', controller.updateField);
+
 
 module.exports = router;

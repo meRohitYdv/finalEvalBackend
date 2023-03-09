@@ -1,5 +1,6 @@
 /* eslint-disable no-unused-vars */
 const ContentsTable = require('../models').content;
+const CollectionsTable = require('../models').collection;
 
 async function findContent(contentName){
     const content = await ContentsTable.findOne({
@@ -69,5 +70,13 @@ async function getfieldsFromContentName(contentName){
     return content.dataValues.contentFields;
 }
 
+async function updateName(reqBody){
+    const {contentName, newContentName} = reqBody;
+    console.log(contentName, newContentName);
+    await ContentsTable.update({contentName: newContentName}, {where: {contentName: contentName}});
+    await CollectionsTable.update({contentName: newContentName}, {where: {contentName: contentName}});
+    return newContentName;
+}
 
-module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName };
+
+module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName };
