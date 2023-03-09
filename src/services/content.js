@@ -44,21 +44,21 @@ async function addFieldToContent(reqBody){
     return {contentName};
 }
 
-// async function deleteFieldFromContent(reqBody){
-//     const {contentName, fieldName} = reqBody;
-//     const content = await findContent(contentName);
-//     if(content===null)
-//         return "content with given name doesn't exist";
+async function deleteFieldFromContent(reqBody){
+    const {contentName, fieldName} = reqBody;
+    const content = await findContent(contentName);
+    if(content===null)
+        return "content with given name doesn't exist";
     
-//     let contentFields = content.dataValues.contentFields;
-//     const updatedFields = [];
-//     for (const [key, value] of Object.entries(contentFields)) {
-//         if(value!==fieldName)
-//         updatedFields.push(value);
-//     }
+    let contentFields = content.dataValues.contentFields;
+    const updatedFields = [];
+    for (const [key, value] of Object.entries(contentFields)) {
+        if(value!==fieldName)
+        updatedFields.push(value);
+    }
     
-//     await ContentsTable.update({contentFields: updatedFields}, {where: {contentName: contentName}});
-//     return {contentName};
-// }
+    await ContentsTable.update({contentFields: updatedFields}, {where: {contentName: contentName}});
+    return {contentName};
+}
 
 module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent };
