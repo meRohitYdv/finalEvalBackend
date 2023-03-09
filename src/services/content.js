@@ -61,4 +61,13 @@ async function deleteFieldFromContent(reqBody){
     return {contentName};
 }
 
-module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent };
+async function getfieldsFromContentName(contentName){
+    const content = await findContent(contentName);
+    if(content===null)
+        return "content with given name doesn't exist";
+    
+    return content.dataValues.contentFields;
+}
+
+
+module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName };

@@ -49,4 +49,17 @@ async function deleteFieldFromContent(req, res){
     }
 }
 
-module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent};
+async function getfieldsFromContentName(req, res){
+    try{
+        const result = await services.getfieldsFromContentName(req.params.contentName);
+        if(result==="content with given name doesn't exist")
+            return res.status(400).send(result);
+        return res.status(200).send(result);
+    }
+    catch(e){
+        console.log(e);
+        return res.status(500).send("Something went wrong.");
+    }
+}
+
+module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName};

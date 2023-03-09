@@ -1,5 +1,6 @@
 const express = require('express');
 const content = require('./routes/content');
+const collections = require('./routes/collection');
 const validateJWT = require('./middlewares/validateJWT');
 const cors = require('cors');
 
@@ -14,6 +15,7 @@ var corsOptions = {
 }
 app.use(cors(corsOptions));
 app.use('/contents', content);
+app.use('/collections', collections);
 
 app.get('/', (req, res)=>{
   res.status(200).send('Hi there!!!');
