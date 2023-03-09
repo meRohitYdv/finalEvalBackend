@@ -72,11 +72,23 @@ async function getfieldsFromContentName(contentName){
 
 async function updateName(reqBody){
     const {contentName, newContentName} = reqBody;
-    console.log(contentName, newContentName);
     await ContentsTable.update({contentName: newContentName}, {where: {contentName: contentName}});
     await CollectionsTable.update({contentName: newContentName}, {where: {contentName: contentName}});
     return newContentName;
 }
 
+async function updateField(reqBody){
+    const {fieldName, newFieldName, contentName} = reqBody;
+    
+    const collections = await CollectionsTable.findOne({where:{contentName: contentName}});
+    if(collections)
+        return "unable to update as content instances are present";
+    
+    await deleteFieldFromContent(reqBody);
+    reqBody.fieldName = newFieldName;
+    await addFieldToContent(reqBody);
+    return "field updated";
+}
 
-module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName };
+
+module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField };

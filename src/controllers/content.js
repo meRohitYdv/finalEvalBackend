@@ -70,4 +70,17 @@ async function updateName(req, res){
     }
 }
 
-module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName};
+async function updateField(req, res){
+    try{
+        const result = await services.updateField(req.body);
+        if(result==="unable to update as content instances are present")
+            return res.status(400).send(result);
+        return res.status(200).send(result);
+    }catch(e){
+        console.log(e);
+        return res.status(500).send("Something went wrong.");
+    }
+}
+
+
+module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField};
