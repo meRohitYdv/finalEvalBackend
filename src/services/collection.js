@@ -48,4 +48,13 @@ async function updateCollection(requestBody){
     return collectionData;
 }
 
-module.exports = { createCollection, updateCollection };
+async function deleteCollection(id){
+    await CollectionsTable.destroy({ where:{id:id} });
+    return id;
+}
+
+async function getCollections(contentName){
+    return await CollectionsTable.findAll({where: {contentName:contentName }, attributes:["id", "contentName", "collectionData"]});
+}
+
+module.exports = { createCollection, updateCollection, deleteCollection, getCollections };
