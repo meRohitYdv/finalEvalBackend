@@ -15,9 +15,11 @@ async function createContent(contentName){
     const content = await findContent(contentName);
     if(content!==null)
         return "content already exists";
+        
     
     await ContentsTable.create({contentName: contentName, contentFields: []});
     return contentName;
+
 }
 
 async function getAllContents(){
@@ -59,6 +61,8 @@ async function deleteFieldFromContent(reqBody){
     }
     
     await ContentsTable.update({contentFields: updatedFields}, {where: {contentName: contentName}});
+
+
     return {contentName};
 }
 
@@ -89,6 +93,10 @@ async function updateField(reqBody){
     await addFieldToContent(reqBody);
     return "field updated";
 }
+async function deleteContent(contentName){
+    await CollectionsTable.destroy({where: {contentName: contentName}});
+    await ContentsTable.destroy({where: {contentName: contentName}});
+}
 
 
-module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField };
+module.exports = { createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField, deleteContent };

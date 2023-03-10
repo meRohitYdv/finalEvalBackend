@@ -1,8 +1,9 @@
 const services = require("../services/content.js");
 
 async function createContent(req, res){
+    console.log(req.body);
     try{
-        const contentName = await services.createContent(req.body.name);
+        const contentName = await services.createContent(req.body.contentName);
         if(contentName==="content already exists")
             return res.status(400).send("content already exists");
         return res.status(200).send({contentName: contentName});
@@ -24,6 +25,7 @@ async function getAllContents(req, res){
 }
 
 async function addFieldToContent(req, res){
+    console.log(req.body);
     try{
         const result = await services.addFieldToContent(req.body);
         if(result==="content with given name doesn't exist" || result==="content already has specified field")
@@ -82,5 +84,16 @@ async function updateField(req, res){
     }
 }
 
+async function deleteContent(req, res){
+    try{
+        console.log(req.params.contentName);
+        await services.deleteContent(req.params.contentName);
+        return res.status(200).send(req.params.contentName);
+    }catch(e){
+        console.log(e);
+        return res.status(500).send("Something went wrong.");
+    }
+}
 
-module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField};
+
+module.exports = {createContent, getAllContents, addFieldToContent, deleteFieldFromContent, getfieldsFromContentName, updateName, updateField, deleteContent};

@@ -6,20 +6,19 @@ const cors = require('cors');
 
 const app = express();
 const port = 3001;
-app.use(express.json());
-app.use(validateJWT);
 
 var corsOptions = {
   origin: 'http://localhost:3000',
   optionsSuccessStatus: 200
 }
 app.use(cors(corsOptions));
+
+app.use(express.json());
+app.use(validateJWT);
+
 app.use('/contents', content);
 app.use('/collections', collections);
 
-app.get('/', (req, res)=>{
-  res.status(200).send('Hi there!!!');
-});
 
 
 app.listen(port, () =>

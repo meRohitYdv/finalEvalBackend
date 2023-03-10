@@ -8,6 +8,7 @@ router.delete('/deleteField', controller.deleteFieldFromContent);
 router.get('/fields/:contentName', controller.getfieldsFromContentName);
 router.patch('/updateName', controller.updateName);
 router.patch('/updateField', controller.updateField);
+router.delete('/delete/:contentName', controller.deleteContent);
 
 
 module.exports = router;
